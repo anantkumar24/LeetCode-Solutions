@@ -1,0 +1,28 @@
+class Solution {
+public:
+    TreeNode* pruneTree(TreeNode* root)
+    {
+         return dfs(root) ? root:nullptr;
+    }
+    bool dfs(TreeNode* node)
+    {
+        if(node==nullptr)//base case
+        return false;
+    
+        //follow post order traversal LRN
+        //check left and right subtree
+        bool leftStatus=dfs(node->left);
+        bool rightStatus=dfs(node->right);
+        //prune left subtree if it dosent contain 1
+        if(leftStatus==false)
+            node->left=nullptr;
+        //prune right subtree if it dosent contain 1
+        if(rightStatus==false)
+            node->right=nullptr;
+        //return true if current node or any subtree contains 1
+        if(node->val==1 || leftStatus==true || rightStatus==true)
+            return true;
+        else
+            return false;
+    }
+};
